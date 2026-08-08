@@ -1,0 +1,131 @@
+{
+  "layer": "top",
+  "include": [
+    "./modules/connections.jsonc"
+  ],
+  "modules-left": [
+    "clock",
+    "wireplumber",
+    "custom/media"
+  ],
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+    "group/connections",
+    "battery",
+    "custom/notification",
+    "custom/power"
+  ],
+  "clock": {
+    "format": "<span size='11pt'>{:%H.%M}</span>",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "format": {
+        "today": "<span color='#262a2b'><b>{}</b></span>"
+      }
+    }
+  },
+  "wireplumber": {
+    "format": "{icon}",
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "󰋋",
+      "headset": "󰋋",
+      "hands-free": "󰋋",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "on-click": "pavucontrol",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "tooltip-format": "Output: {volume}%"
+  },
+  "custom/media": {
+    "format": "{}",
+    "escape": true,
+    "return-type": "json",
+    "max-length": 35,
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl stop",
+    "smooth-scrolling-threshold": 1, // This value was tested using a trackpad, it should be lowered if using a mouse.
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous",
+    "exec": "~/.config/waybar/scripts/mediaplayer.py 2> /dev/null" // Script in resources/custom_modules folder
+},
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "on-scroll-down": "hyprctl dispatch \"hl.dsp.focus({workspace = 'e+1'}\")",
+    "on-scroll-up": "hyprctl dispatch \"hl.dsp.focus({workspace = 'e-1'}\")",
+    "persistent-workspaces": {
+      "*": 5
+    },
+    "cursor": true,
+    "format-icons": {
+      "active": "󰮯",
+      "persistent": "",
+      "empty": ""
+    }
+  },
+  "battery": {
+    "interval": 60,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} <span size='11pt'>{capacity}%</span>",
+    "format-full": "{icon} <span size='11pt'>{capacity}%</span>",
+    "format-charging": "<span size='12pt'>󱐌</span> <span size='11pt'>{capacity}%</span>",
+    "format-plugged": " <span size='11pt'></span>",
+    "format-alt": "{icon} <span size='11pt'>{time}</span>",
+    "tooltip-format": "{timeTo}",
+    "format-icons": {
+      "default": [
+        "󰂎",
+        "󰁺",
+        "󰁻",
+        "󰁼",
+        "󰁽",
+        "󰁾",
+        "󰁿",
+        "󰂀",
+        "󰂁",
+        "󰂂",
+        "󰁹"
+      ]
+    }
+  },
+  "group/connections": {
+    "orientation": "horizontal",
+    "modules": [
+      "network",
+      "bluetooth"
+    ]
+  },
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+        "notification": "",
+        "none": "",
+        "dnd-notification": "",
+        "dnd-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+},
+
+  "custom/power": {
+	"format" : "⏻",
+	"tooltip": false,
+	"on-click": "wlogout" 
+
+}
+}

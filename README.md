@@ -1,0 +1,1 @@
+my first hyprland rice
